@@ -1,0 +1,24 @@
+services:
+  db:
+    image: mariadb:latest
+    container_name: lifetracker_db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    container_name: lifetracker_adminer
+    restart: always
+    ports:
+      - "${ADMINER_PORT}:8080"
+
+volumes:
+  db_data:
