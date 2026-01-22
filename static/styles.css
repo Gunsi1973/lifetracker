@@ -1,0 +1,63 @@
+body { 
+    font-family: 'Segoe UI', Tahoma, sans-serif; 
+    background-color: #f8fafc; 
+}
+
+#visualization { 
+    width: 100%; 
+    min-height: 500px; 
+    background: white; 
+}
+
+/* Lane Labels links fixieren */
+.vis-labelset .vis-label { 
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-weight: bold;
+    color: #444;
+    border-bottom: 1px solid #eee;
+    width: 160px !important;
+}
+
+/* --- Meilenstein & Punkt Korrekturen --- */
+
+/* Entfernt den standardmässigen blauen Punkt radikal */
+.vis-item.vis-dot, 
+.vis-item.vis-point .vis-dot {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Meilensteine ohne Kasten und Schatten */
+.vis-item.vis-point { 
+    background-color: transparent !important; 
+    border: none !important; 
+    box-shadow: none !important;
+}
+
+/* Text-Positionierung für Meilensteine */
+.vis-item.vis-point .vis-item-content { 
+    padding-left: 0 !important; 
+    font-weight: bold;
+    color: #333 !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+}
+
+/* Balken (Ranges) */
+.vis-item { 
+    border-radius: 4px; 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+}
+
+/* Tooltip Styling */
+.vis-tooltip {
+    background-color: #ffffff !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+    font-size: 13px !important;
+    color: #333 !important;
+}

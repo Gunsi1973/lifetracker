@@ -74,21 +74,29 @@ WHERE birth_date IS NOT NULL;
 CREATE OR REPLACE VIEW view_complete_timeline AS
 SELECT 
     e.id, 
-    c.name AS category_name, 
     e.title, 
-    e.start_date, 
+    COALESCE(e.start_date, e.end_date) AS start_date, 
     e.end_date, 
-    e.is_milestone
+    CAST(e.is_milestone AS UNSIGNED) AS is_milestone, 
+    CAST(e.is_public AS UNSIGNED) AS is_public,
+    e.category_id,
+    COALESCE(c.name, 'Keine Kategorie') AS category_name, 
+    COALESCE(c.color_code, '#cccccc') AS color_code
 FROM events e
 LEFT JOIN categories c ON e.category_id = c.id
 
 UNION ALL
 
 SELECT 
-    id, 
-    category_name, 
-    title, 
-    start_date, 
-    end_date, 
-    is_milestone 
-FROM view_birthday_events;
+    p.id + 10000 AS id, 
+    CONCAT('🎂 ', p.full_name) AS title, 
+    STR_TO_DATE(CONCAT(YEAR(CURDATE()), DATE_FORMAT(p.birth_date, '-%m-%d')), '%Y-%m-%d') AS start_date,
+    NULL AS end_date, 
+    1 AS is_milestone, 
+    1 AS is_public,
+    c.id AS category_id,
+    c.name AS category_name, 
+    c.color_code
+FROM persons p
+JOIN categories c ON c.name = 'Birthday'
+WHERE p.birth_date IS NOT NULL;

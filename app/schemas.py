@@ -7,6 +7,11 @@ class CategoryBase(BaseModel):
     name: str
     color_code: Optional[str] = "#3498db"
 
+# NEU: Dieses Modell wird für Antworten verwendet, damit die ID mitkommt
+class CategoryResponse(CategoryBase):
+    id: int
+    model_config = ConfigDict(from_attributes=True)
+
 class EventBase(BaseModel):
     title: str
     category_id: Optional[int] = None
@@ -25,11 +30,12 @@ class EventBase(BaseModel):
         return v
 
 class EventCreate(EventBase):
-    predecessor_ids: Optional[List[int]] = [] # IDs of events that must come before
+    predecessor_ids: Optional[List[int]] = [] 
 
 class EventResponse(EventBase):
     id: int
-    category: Optional[CategoryBase] = None # Adds the category object to the output
+    # Geändert: Nutzt jetzt CategoryResponse statt CategoryBase
+    category: Optional[CategoryResponse] = None 
     model_config = ConfigDict(from_attributes=True)
 
 class PersonBase(BaseModel):
